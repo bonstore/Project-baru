@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkout - Bonskuy Store</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #fff; }
+    h1 { text-align: center; color: #cc2c2c; }
+    form { max-width: 400px; margin: auto; }
+    label { font-weight: bold; margin-top: 15px; display: block; }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #cc2c2c;
+      color: white;
+      border: none;
+      font-weight: bold;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover { background-color: #b02525; }
+  </style>
+</head>
+<body>
+
+  <h1>Checkout Produk</h1>
+
+  <form onsubmit="kirimKeWA(event)">
+    <label>Produk</label>
+    <input type="text" id="produk" readonly>
+
+    <label>Harga</label>
+    <input type="text" id="harga" readonly>
+
+    <label>Followers Awal</label>
+    <input type="text" id="followers" placeholder="Contoh: 125" required>
+
+    <label>Metode Pembayaran</label>
+    <select id="metode" required>
+      <option value="">-- Pilih --</option>
+      <option value="Qris">Qris</option>
+      <option value="Dana">Dana</option>
+      <option value="OVO">OVO</option>
+      <option value="GoPay">GoPay</option>
+      <option value="ShopeePay">ShopeePay</option>
+    </select>
+
+    <label>Username Sosial Media</label>
+    <input type="text" id="username" placeholder="@username_anda" required>
+
+    <button type="submit">ORDER VIA WHATSAPP</button>
+  </form>
+
+  <script>
+    // Ambil data dari localStorage
+    const data = JSON.parse(localStorage.getItem('produkDipilih'));
+    if (!data) {
+      alert('Silakan pilih produk dulu.');
+      window.location.href = 'produk.html';
+    } else {
+      document.getElementById('produk').value = data.nama;
+      document.getElementById('harga').value = 'Rp ' + data.harga.toLocaleString('id-ID');
+    }
+
+    function kirimKeWA(e) {
+      e.preventDefault();
+
+      const nama = document.getElementById('produk').value;
+      const harga = document.getElementById('harga').value;
+      const followers = document.getElementById('followers').value;
+      const metode = document.getElementById('metode').value;
+      const username = document.getElementById('username').value;
+
+      const pesan = `🛒 *Pesanan Baru dari Bonskuy Store*\n\n📦 Produk: ${nama}\n💰 Harga: ${harga}\n👤 Username: ${username}\n📊 Followers Awal: ${followers}\n💳 Pembayaran: ${metode}\n\nSilakan diproses 🙏`;
+
+      const noAdmin = '6285141316926'; // GANTI dengan nomor WhatsApp kamu
+      const link = `https://wa.me/${noAdmin}?text=${encodeURIComponent(pesan)}`;
+      window.open(link, '_blank');
+    }
+  </script>
+
+</body>
+</html>
