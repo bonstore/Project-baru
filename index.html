@@ -323,9 +323,10 @@
 
     // ➕ Tambahkan aksi klik untuk buka checkout.html
     card.onclick = () => {
-      localStorage.setItem('produkDipilih', JSON.stringify(p));
-      window.open('checkout.html', '_blank');
-    };
+  localStorage.setItem('produkDipilih', JSON.stringify(p));
+  window.location.href = 'checkout.html';
+};
+
 
     container.appendChild(card);
   });
